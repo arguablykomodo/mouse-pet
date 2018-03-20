@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+  "version": "1.0.0",
+
+  "name": "Flying Mouse",
+  "description": "A fun extension that adds a flying creature following your cursor",
+  "homepage_url": "https://github.com/SrKomodo/flying-mouse",
+  "developer": {
+    "name": "SrKomodo",
+    "url": "https://github.com/SrKomodo"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["index.js"],
+      "css": ["style.css"]
+    }
+  ]
+}
