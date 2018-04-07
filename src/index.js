@@ -1,5 +1,7 @@
 const SIZE = 20;
 
+const bodyParts = new Array(10).fill(0);
+
 /**
  * Sets the appropiate size for the canvas
  */
@@ -23,7 +25,7 @@ document.addEventListener("mousemove", (e) => {
   dy += e.movementY; y = e.clientY;
 
   // If we moved an entire body piece away then draw
-  const distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+  const distance = Math.hypot(dx, dy);
   if (distance >= SIZE / 2)
     draw(distance, Math.atan2(dy, dx));
 });
@@ -35,10 +37,25 @@ document.addEventListener("mousemove", (e) => {
  */
 function draw(r, phi) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.rotate(phi);
-  ctx.fillRect(-SIZE / 2, -SIZE / 2, SIZE, SIZE);
-  ctx.restore();
+
+  // This basically shifts all body parts back by 1 and adds the new one
+  bodyParts.pop();
+  bodyParts.unshift(phi);
+
+  // With these variables we will accumulate the offset between body parts
+  let offsetX = x, offsetY = y;
+
+  // Now we just render each bodypart
+  for (const angle of bodyParts) {
+    ctx.save();
+    ctx.translate(offsetX, offsetY);
+    ctx.rotate(angle);
+    ctx.fillRect(-SIZE / 2, -SIZE / 2, SIZE, SIZE);
+    ctx.restore();
+
+    // And add to the offset
+    offsetX -= SIZE * Math.cos(angle);
+    offsetY -= SIZE * Math.sin(angle);
+  }
   dx = dy = 0;
 }
