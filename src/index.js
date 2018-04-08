@@ -11,6 +11,13 @@ const angles = new Array(10).fill(0);
 for (let i = 0; i < 10; i++) {
   const bodypart = document.createElement("div");
   bodypart.style.width = bodypart.style.height = `${SIZE}px`;
+  bodypart.style.backgroundImage = `url(${browser.extension.getURL("skins/snake.png")})`;
+
+  if (i === 0)
+    bodypart.style.backgroundPositionX = `-${SIZE * 2}px`;
+  else if (i !== 9)
+    bodypart.style.backgroundPositionX = `-${SIZE}px`;
+
   container.appendChild(bodypart);
 }
 
