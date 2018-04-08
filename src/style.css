@@ -1,4 +1,4 @@
-#flying-mouse-container {
+#mouse-pet-container {
   position: fixed;
   z-index: 99999;
   top: 0;
@@ -8,7 +8,7 @@
   pointer-events: none;
 }
 
-#flying-mouse-container div {
+#mouse-pet-container div {
   position: fixed;
   top: 0;
   left: 0;

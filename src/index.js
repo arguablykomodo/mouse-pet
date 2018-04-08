@@ -3,7 +3,7 @@ const SIZE = 20;
 
 // Setup canvas
 const container = document.createElement("div");
-container.id = "flying-mouse-container";
+container.id = "mouse-pet-container";
 document.body.appendChild(container);
 
 // Setup bodyparts

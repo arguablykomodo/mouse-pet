@@ -2,9 +2,9 @@
   "manifest_version": 2,
   "version": "1.0.0",
 
-  "name": "Flying Mouse",
+  "name": "Mouse Pet",
   "description": "A fun extension that adds a flying creature following your cursor",
-  "homepage_url": "https://github.com/SrKomodo/flying-mouse",
+  "homepage_url": "https://github.com/SrKomodo/mouse-pet",
   "developer": {
     "name": "SrKomodo",
     "url": "https://github.com/SrKomodo"
