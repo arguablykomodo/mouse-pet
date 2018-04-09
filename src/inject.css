@@ -8,6 +8,11 @@
   pointer-events: none;
 }
 
+#mouse-pet-container.hidden {
+  opacity: 0;
+  transition: opacity 1s;
+}
+
 #mouse-pet-container div {
   position: fixed;
   top: 0;

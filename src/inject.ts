@@ -7,12 +7,18 @@ const container = document.createElement("div");
 container.id = "mouse-pet-container";
 document.body.appendChild(container);
 
+// These variables are for the auto hide feature
+let autoHideTimer: number;
+let autoHide = false;
+
 browser.storage.sync.get({
+  petAutoHide: false,
   petEnabled: true,
   petLength: 10,
   petSkin: "snake.png",
 }).then((options: OptionStorage) => {
 
+  autoHide = options.petAutoHide;
   container.style.display = options.petEnabled ? "block" : "none";
 
   // Setup bodyparts
@@ -32,6 +38,9 @@ browser.storage.sync.get({
 
   // Update bodyparts on change
   browser.storage.onChanged.addListener((changes) => {
+
+    if (changes.petAutoHide)
+      autoHide = changes.petAutoHide.newValue;
 
     if (changes.petEnabled)
       container.style.display = changes.petEnabled.newValue ? "block" : "none";
@@ -82,6 +91,9 @@ document.addEventListener("mousemove", (e) => {
 });
 
 function draw(r: number, phi: number) {
+  clearTimeout(autoHideTimer);
+  container.className = "";
+
   // Shift all body parts back by 1
   angles.pop();
   angles.unshift(phi);
@@ -103,4 +115,7 @@ function draw(r: number, phi: number) {
     offsetY -= SIZE * Math.sin(angle);
   }
   dx = dy = 0;
+
+  if (autoHide)
+    autoHideTimer = setTimeout(() => container.className = "hidden", 1000);
 }
