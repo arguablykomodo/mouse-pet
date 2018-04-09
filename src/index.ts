@@ -1,6 +1,5 @@
 const SIZE = 20;
 
-
 // Setup canvas
 const container = document.createElement("div");
 container.id = "mouse-pet-container";
@@ -34,12 +33,7 @@ document.addEventListener("mousemove", (e) => {
     draw(distance, Math.atan2(dy, dx));
 });
 
-/**
- * Renders the creature
- * @param {number} r distance in polar coordinates
- * @param {number} phi rotation in polar coordinates
- */
-function draw(r, phi) {
+function draw(r: number, phi: number) {
   // This basically shifts all body parts back by 1 and adds the new one
   angles.pop();
   angles.unshift(phi);
@@ -50,14 +44,13 @@ function draw(r, phi) {
   // Now we just render each bodypart
   for (let i = 0; i < angles.length; i++) {
     const angle = angles[i];
-    /** @type {HTMLDivElement} */
-    const element = container.children[i];
+    const element = container.children[i] as HTMLDivElement;
 
     element.style.transform = `
-      translate(${offsetX - SIZE / 2}px, ${offsetY - SIZE / 2}px) 
+      translate(${offsetX - SIZE / 2}px, ${offsetY - SIZE / 2}px)
       rotate(${angle}rad)
     `;
-    
+
     offsetX -= SIZE * Math.cos(angle);
     offsetY -= SIZE * Math.sin(angle);
   }

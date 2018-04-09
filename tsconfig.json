@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "strict": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "typeRoots": [
+      "node_modules/@types",
+      "node_modules/web-ext-types"
+    ],
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}
