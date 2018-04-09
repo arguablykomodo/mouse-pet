@@ -11,7 +11,7 @@ browser.storage.sync.get({
   petEnabled: true,
   petLength: 10,
   petSkin: "snake.png",
-}).then((options) => {
+}).then((options: OptionStorage) => {
 
   container.style.display = options.petEnabled ? "block" : "none";
 
@@ -59,8 +59,8 @@ browser.storage.sync.get({
     }
 
     if (changes.petSkin) {
-      for (const bodypart of container.children) {
-        (bodypart as HTMLDivElement).style.backgroundImage =
+      for (const bodypart of container.children as HTMLCollectionOf<HTMLDivElement>) {
+        bodypart.style.backgroundImage =
           `url(${browser.extension.getURL(`skins/${changes.petSkin.newValue}`)})`;
       }
     }
@@ -82,7 +82,7 @@ document.addEventListener("mousemove", (e) => {
 });
 
 function draw(r: number, phi: number) {
-  // This basically shifts all body parts back by 1 and adds the new one
+  // Shift all body parts back by 1
   angles.pop();
   angles.unshift(phi);
 

@@ -2,10 +2,15 @@
   "name": "mouse-pet",
   "version": "1.0.0",
   "description": "A fun extension that adds a creature following your cursor",
-  "repository": "https://github.com/SrKomodo/mouse-pet.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SrKomodo/mouse-pet.git"
+  },
   "author": "SrKomodo <komodosr@gmail.com>",
   "license": "MPL-2.0",
   "scripts": {
+    "clean": "rimraf dist",
+
     "files:build": "copyfiles -u 1 src/**/* dist -e src/**/*.ts",
     "files:watch": "watch \"copyfiles -u 1 src/**/* dist -e src/**/*.ts\" src",
 
@@ -17,14 +22,14 @@
     "web-ext:watch": "web-ext run -s=dist -f=firefoxdeveloperedition",
     "web-ext:lint": "web-ext lint -s=dist",
 
-    "build": "run-s files:build typescript:lint typescript:build web-ext:lint web-ext:build",
+    "build": "run-s clean files:build typescript:lint typescript:build web-ext:lint web-ext:build",
     "watch": "run-p files:watch typescript:watch web-ext:watch",
-
     "start": "run-s build watch"
   },
   "dependencies": {
     "copyfiles": "^2.0.0",
     "npm-run-all": "^4.1.2",
+    "rimraf": "^2.6.2",
     "tslint": "^5.9.1",
     "typescript": "^2.8.1",
     "watch": "^1.0.2",
