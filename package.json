@@ -1,7 +1,7 @@
 {
   "name": "mouse-pet",
   "version": "1.0.0",
-  "description": "A fun extension that adds a flying creature following your cursor",
+  "description": "A fun extension that adds a creature following your cursor",
   "repository": "https://github.com/SrKomodo/mouse-pet.git",
   "author": "SrKomodo <komodosr@gmail.com>",
   "license": "MPL-2.0",

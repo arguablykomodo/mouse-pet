@@ -10,7 +10,7 @@
   "version": "1.0.0",
 
   "name": "Mouse Pet",
-  "description": "A fun extension that adds a flying creature following your cursor",
+  "description": "A fun extension that adds a creature following your cursor",
   "homepage_url": "https://github.com/SrKomodo/mouse-pet",
   "developer": {
     "name": "SrKomodo",

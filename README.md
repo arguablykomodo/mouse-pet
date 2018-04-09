@@ -1,5 +1,5 @@
 # Mouse Pet
-A fun extension that adds a flying creature following your cursor
+A fun extension that adds a creature following your cursor
 
 ## Building/Developing
 (you must have node.js installed in your computer)
