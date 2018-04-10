@@ -1,5 +1,6 @@
 const SIZE = 20;
 
+const turns: number[] = [];
 const angles: number[] = [];
 
 // Setup canvas
@@ -24,6 +25,7 @@ browser.storage.sync.get({
   // Setup bodyparts
   for (let i = 0; i < options.petLength; i++) {
     angles.push(0);
+    turns.push(0);
     const bodypart = document.createElement("div");
     bodypart.style.width = bodypart.style.height = `${SIZE}px`;
     bodypart.style.backgroundImage = `url(${browser.extension.getURL(`skins/${options.petSkin}`)})`;
@@ -51,6 +53,7 @@ browser.storage.sync.get({
         (container.lastChild as HTMLDivElement).style.backgroundPositionX = `-${SIZE}px`;
         for (let i = 0; i < sizeChange; i++) {
           angles.push(0);
+          turns.push(0);
           const bodypart = document.createElement("div");
           bodypart.style.width = bodypart.style.height = `${SIZE}px`;
           bodypart.style.backgroundPositionX = `-${SIZE}px`;
@@ -61,6 +64,7 @@ browser.storage.sync.get({
       } else {
         for (let i = sizeChange; i < 0; i++) {
           angles.pop();
+          turns.pop();
           (container.lastChild as HTMLDivElement).remove();
         }
         (container.lastChild as HTMLDivElement).style.backgroundPositionX = "0";
@@ -85,34 +89,47 @@ document.addEventListener("mousemove", (e) => {
   dy += e.movementY; y = e.clientY;
 
   // If we moved an entire body piece away then draw
-  const distance = Math.hypot(dx, dy);
-  if (distance >= SIZE / 2)
-    draw(distance, Math.atan2(dy, dx));
+  const r = Math.hypot(dx, dy);
+  const phi = Math.atan2(dy, dx);
+
+  if (r >= SIZE / 2)
+    draw(r, phi);
 });
 
 function draw(r: number, phi: number) {
   clearTimeout(autoHideTimer);
   container.className = "";
 
+  let newTurn = turns[0];
+  if (phi > Math.PI / 2 && angles[0] < -Math.PI / 2) {
+    newTurn--;
+  } else if (phi < -Math.PI / 2 && angles[0] > Math.PI / 2) {
+    newTurn++;
+  }
+
+  container.firstChild!.textContent = phi >= 0 ? "+" : "-";
+
   // Shift all body parts back by 1
   angles.pop();
   angles.unshift(phi);
+
+  turns.pop();
+  turns.unshift(newTurn);
 
   // With these variables we will accumulate the offset between body parts
   let offsetX = x, offsetY = y;
 
   // Now we just render each bodypart
   for (let i = 0; i < angles.length; i++) {
-    const angle = angles[i];
     const element = container.children[i] as HTMLDivElement;
 
     element.style.transform = `
       translate(${offsetX - SIZE / 2}px, ${offsetY - SIZE / 2}px)
-      rotate(${angle}rad)
+      rotate(${turns[i] * Math.PI * 2 + angles[i]}rad)
     `;
 
-    offsetX -= SIZE * Math.cos(angle);
-    offsetY -= SIZE * Math.sin(angle);
+    offsetX -= SIZE * Math.cos(angles[i]);
+    offsetY -= SIZE * Math.sin(angles[i]);
   }
   dx = dy = 0;
 
