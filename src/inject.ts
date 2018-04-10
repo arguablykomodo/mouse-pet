@@ -107,8 +107,6 @@ function draw(r: number, phi: number) {
     newTurn++;
   }
 
-  container.firstChild!.textContent = phi >= 0 ? "+" : "-";
-
   // Shift all body parts back by 1
   angles.pop();
   angles.unshift(phi);
