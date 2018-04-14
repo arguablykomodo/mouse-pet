@@ -11,10 +11,13 @@
   "scripts": {
     "clean": "rimraf dist",
 
-    "files:build": "copyfiles -u 1 src/**/* dist -e src/**/*.ts",
-    "files:watch": "watch \"copyfiles -u 1 src/**/* dist -e src/**/*.ts\" src",
+    "files:build": "copyfiles -u 1 src/**/* dist -e src/**/*.{ts,scss}",
+    "files:watch": "watch \"copyfiles -u 1 src/**/* dist -e src/**/*.{ts,scss}\" src",
 
-    "typescript:build": "tsc",
+    "sass:build": "node-sass src -o dist --source-map true",
+    "sass:watch": "node-sass src -o dist -w",
+
+    "typescript:build": "tsc --sourceMap",
     "typescript:watch": "tsc -w",
     "typescript:lint": "tslint --project .",
 
@@ -22,12 +25,13 @@
     "web-ext:watch": "web-ext run -s=dist -f=firefoxdeveloperedition",
     "web-ext:lint": "web-ext lint -s=dist",
 
-    "build": "run-s clean files:build typescript:lint typescript:build web-ext:lint web-ext:build",
-    "watch": "run-p files:watch typescript:watch web-ext:watch",
-    "start": "run-s build watch"
+    "build": "run-s clean files:build sass:build typescript:lint typescript:build web-ext:lint web-ext:build",
+    "watch": "run-p files:watch sass:watch typescript:watch web-ext:watch",
+    "start": "yarn watch"
   },
   "dependencies": {
     "copyfiles": "^2.0.0",
+    "node-sass": "^4.8.3",
     "npm-run-all": "^4.1.2",
     "rimraf": "^2.6.2",
     "tslint": "^5.9.1",

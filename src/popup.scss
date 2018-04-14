@@ -1,0 +1,45 @@
+body {
+  margin: 10px;
+}
+
+input[type=range] {
+  &::-moz-range-track {
+    height: 2px;
+    border: solid 1px #d7d7db;
+    background: #ededf0;
+  }
+
+  &::-moz-range-thumb {
+    border: solid 1px #0a84ff;
+    background: #45a1ff;
+  }
+
+  &:hover::-moz-range-thumb {
+    background: #0060df;
+    border-color: #003eaa;
+  }
+}
+
+#petLengthContainer {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: 0;
+}
+
+#petLength {
+  margin-right: 0;
+}
+
+#petSkinContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+
+  label {
+    margin-right: 6px;
+  }
+}
+
+#petSkin {
+  flex-grow: 1;
+}
