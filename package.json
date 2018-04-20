@@ -31,6 +31,7 @@
     "webpack-cli": "^2.0.14"
   },
   "dependencies": {
+    "photon-colors": "^3.0.1",
     "web-ext-types": "^2.0.1"
   }
 }

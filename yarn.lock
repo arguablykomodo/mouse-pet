@@ -5680,6 +5680,10 @@ performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
 
+photon-colors@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/photon-colors/-/photon-colors-3.0.1.tgz#cea2c9abf6595d0a30c92993b4d7edad66515652"
+
 pify@^2.0.0, pify@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"

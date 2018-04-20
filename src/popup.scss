@@ -1,3 +1,5 @@
+@import "~photon-colors/photon-colors.scss";
+
 body {
   margin: 10px;
 }
@@ -5,18 +7,18 @@ body {
 input[type=range] {
   &::-moz-range-track {
     height: 2px;
-    border: solid 1px #d7d7db;
-    background: #ededf0;
+    border: solid 1px $grey-30;
+    background: $grey-20;
   }
 
   &::-moz-range-thumb {
-    border: solid 1px #0a84ff;
-    background: #45a1ff;
+    border: solid 1px $blue-50;
+    background: $blue-40;
   }
 
   &:hover::-moz-range-thumb {
-    background: #0060df;
-    border-color: #003eaa;
+    background: $blue-60;
+    border-color: $blue-70;
   }
 }
 
