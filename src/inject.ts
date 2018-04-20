@@ -1,3 +1,5 @@
+import "./inject.scss";
+
 const SIZE = 20;
 
 const turns: number[] = [];

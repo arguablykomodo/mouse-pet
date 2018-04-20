@@ -1,3 +1,5 @@
+import "./popup.scss";
+
 async function main() {
   const petAutoHide = document.getElementById("petAutoHide") as HTMLInputElement;
   const petEnabled = document.getElementById("petEnabled") as HTMLInputElement;

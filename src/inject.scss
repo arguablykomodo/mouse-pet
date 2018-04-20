@@ -1,0 +1,22 @@
+#mouse-pet-container {
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+
+  &.hidden {
+    opacity: 0;
+    transition: opacity 1s;
+  }
+
+  div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    transition: transform 0.1s ease-out;
+  }
+}
