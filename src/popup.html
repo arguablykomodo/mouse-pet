@@ -7,29 +7,25 @@
   <link rel="stylesheet" href="popup.css">
   <title>Document</title>
 </head>
-<body class="browser-style">
-  <input class="browser-style" type="checkbox" name="Enabled" id="petEnabled">
-  <label class="browser-style" for="petEnabled">Enabled</label>
+<body>
+  <input type="checkbox" name="Enabled" id="petEnabled">
+  <label for="petEnabled">Enabled</label>
 
-  <input class="browser-style" type="checkbox" name="AutoHide" id="petAutoHide">
-  <label class="browser-style" for="petAutoHide">Hide Pet when not moving</label>
+  <input type="checkbox" name="AutoHide" id="petAutoHide">
+  <label for="petAutoHide">Hide Pet when not moving</label>
 
-  <div class="browser-style" id="petLengthContainer">
-    <label class="browser-style" for="petLength">Length:</label>
-    <input class="browser-style" type="range" min="3" max="50" step="1" value="10" name="Pet Length" id="petLength">
-  </div>
+  <label for="petLength">Length:</label>
+  <input type="range" min="3" max="50" step="1" value="10" name="Pet Length" id="petLength">
 
-  <div class="browser-style" id="petSkinContainer">
-    <label class="browser-style" for="petSkin">Skin:</label>
-    <select class="browser-style" name="Pet Skin" id="petSkin">
-      <option value="snake.png" selected>Snake</option>
-      <option value="abstract.png">Abstract</option>
-      <option value="rainbow.png">Rainbow</option>
-      <option value="pacman.png">Pacman</option>
-    </select>
-  </div>
+  <label for="petSkin">Skin:</label>
+  <select name="Pet Skin" id="petSkin">
+    <option value="snake.png" selected>Snake</option>
+    <option value="abstract.png">Abstract</option>
+    <option value="rainbow.png">Rainbow</option>
+    <option value="pacman.png">Pacman</option>
+  </select>
 
-  <button class="browser-style default" id="update">Update</button>
+  <button id="update">Update</button>
 
   <script src="popup.js"></script>
 </body>

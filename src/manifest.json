@@ -31,7 +31,6 @@
   ],
 
   "browser_action": {
-    "browser_style": true,
     "default_icon": "icon.svg",
     "default_title": "Mouse Pet",
     "default_popup": "popup.html"
