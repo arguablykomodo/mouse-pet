@@ -7,6 +7,7 @@ module.exports = {
     inject: "./src/inject.ts",
     popup: "./src/popup.ts"
   },
+  devtool: "source-map",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].js",
