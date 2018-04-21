@@ -7,16 +7,26 @@
   height: 100vh;
   pointer-events: none;
 
-  &.hidden {
-    opacity: 0;
-    transition: opacity 1s;
-  }
-
   div {
     position: fixed;
     top: 0;
     left: 0;
-    pointer-events: none;
+    width: 20px;
+    height: 20px;
+    background-image: var(--mouse-pet-image);
+    background-position-x: -20px;
     transition: transform 0.1s ease-out;
+
+    &.hidden {
+      display: none;
+    }
+
+    &:first-child {
+      background-position-x: -40px;
+    }
+
+    &:last-child {
+      background-position-x: 0;
+    }
   }
 }

@@ -1,140 +1,105 @@
 import "./inject.scss";
 
-const SIZE = 20;
-let ready = false;
-
-const turns: number[] = [];
-const angles: number[] = [];
-
-// Setup canvas
-const container = document.createElement("div");
-container.id = "mouse-pet-container";
-document.body.appendChild(container);
-
-// These variables are for the auto hide feature
-let autoHideTimer: number;
-let autoHide = false;
-
 browser.storage.sync.get({
   petAutoHide: false,
   petEnabled: true,
   petLength: 10,
   petSkin: "snake.png",
-}).then((options: OptionStorage) => {
+}).then((settings: OptionStorage) => {
+  const SIZE = 20;
+  const angles: Array<[number, number]> = [];
+  let isEnabled = settings.petEnabled;
+  let autoHideEnabled = settings.petAutoHide;
+  let autoHideTimer: number;
 
-  autoHide = options.petAutoHide;
-  container.style.display = options.petEnabled ? "block" : "none";
+  const fragment = document.createDocumentFragment();
+  const container = document.createElement("div");
+  container.id = "mouse-pet-container";
 
-  // Setup bodyparts
-  for (let i = 0; i < options.petLength; i++) {
-    angles.push(0);
-    turns.push(0);
-    const bodypart = document.createElement("div");
-    bodypart.style.width = bodypart.style.height = `${SIZE}px`;
-    bodypart.style.backgroundImage = `url(${browser.extension.getURL(`skins/${options.petSkin}`)})`;
+  container.style.setProperty(
+    "--mouse-pet-image",
+    `url(${browser.runtime.getURL(`skins/${settings.petSkin}`)})`,
+  );
 
-    if (i === 0)
-      bodypart.style.backgroundPositionX = `-${SIZE * 2}px`;
-    else if (i !== options.petLength - 1)
-      bodypart.style.backgroundPositionX = `-${SIZE}px`;
-
-    container.appendChild(bodypart);
+  for (let i = 0; i < settings.petLength; i++) {
+    angles.push([0, 0]);
+    container.appendChild(document.createElement("div"));
   }
-  ready = true;
 
-  // Update bodyparts on change
+  fragment.appendChild(container);
+  document.body.appendChild(fragment);
+
   browser.storage.onChanged.addListener((changes) => {
+    if (changes.petEnabled)
+      isEnabled = changes.petEnabled.newValue;
 
     if (changes.petAutoHide)
-      autoHide = changes.petAutoHide.newValue;
+      autoHideEnabled = changes.petAutoHide.newValue;
 
-    if (changes.petEnabled)
-      container.style.display = changes.petEnabled.newValue ? "block" : "none";
+    if (changes.petSkin)
+      container.style.setProperty(
+        "--mouse-pet-image",
+        `url(${browser.runtime.getURL(`skins/${changes.petSkin.newValue}`)})`,
+      );
 
     if (changes.petLength) {
-      const sizeChange = changes.petLength.newValue - changes.petLength.oldValue;
-      if (sizeChange > 0) {
-        (container.lastChild as HTMLDivElement).style.backgroundPositionX = `-${SIZE}px`;
-        for (let i = 0; i < sizeChange; i++) {
-          angles.push(0);
-          turns.push(0);
-          const bodypart = document.createElement("div");
-          bodypart.style.width = bodypart.style.height = `${SIZE}px`;
-          bodypart.style.backgroundPositionX = `-${SIZE}px`;
-          bodypart.style.backgroundImage = `url(${browser.extension.getURL(`skins/${options.petSkin}`)})`;
-          container.appendChild(bodypart);
+      const lengthChange = changes.petLength.newValue - changes.petLength.oldValue;
+      if (lengthChange > 0)
+        for (let i = 0; i < lengthChange; i++) {
+          angles.push([0, 0]);
+          container.appendChild(document.createElement("div"));
         }
-        (container.lastChild as HTMLDivElement).style.backgroundPositionX = "0";
-      } else {
-        for (let i = sizeChange; i < 0; i++) {
+      else
+        for (let i = 0; i < -lengthChange; i++) {
           angles.pop();
-          turns.pop();
-          (container.lastChild as HTMLDivElement).remove();
+          container.lastElementChild!.remove();
         }
-        (container.lastChild as HTMLDivElement).style.backgroundPositionX = "0";
-      }
     }
-
-    if (changes.petSkin) {
-      for (const bodypart of container.children as HTMLCollectionOf<HTMLDivElement>) {
-        bodypart.style.backgroundImage =
-          `url(${browser.extension.getURL(`skins/${changes.petSkin.newValue}`)})`;
-      }
-    }
-
   });
-});
 
-let dx = 0, dy = 0; // These variables will track the mouse movement
-let x = 0, y = 0; // And these ones will track the position
+  let dx = 0, dy = 0;
+  let x = 0, y = 0;
 
-document.addEventListener("mousemove", (e) => {
-  dx += e.movementX; x = e.clientX;
-  dy += e.movementY; y = e.clientY;
+  document.addEventListener("mousemove", (e) => {
+    if (!isEnabled) return;
 
-  // If we moved an entire body piece away then draw
-  const r = Math.hypot(dx, dy);
-  const phi = Math.atan2(dy, dx);
+    dx += e.movementX; dy += e.movementY;
 
-  if (r >= SIZE / 2 && ready)
-    draw(r, phi);
-});
+    const r   = Math.hypot(dx, dy);
+    const phi = Math.atan2(dy, dx);
 
-function draw(r: number, phi: number) {
-  clearTimeout(autoHideTimer);
-  container.className = "";
+    if (r >= SIZE / 2) {
+      x = e.clientX; y = e.clientY;
+      draw(r, phi);
+    }
+  });
 
-  let newTurn = turns[0];
-  if (phi > Math.PI / 2 && angles[0] < -Math.PI / 2) {
-    newTurn--;
-  } else if (phi < -Math.PI / 2 && angles[0] > Math.PI / 2) {
-    newTurn++;
+  function draw(r: number, phi: number) {
+    clearTimeout(autoHideTimer);
+    container.className = "";
+
+    let newTurn = angles[0][1];
+    if (phi > Math.PI / 2 && angles[0][0] < -Math.PI / 2)
+      newTurn--;
+    else if (phi < -Math.PI / 2 && angles[0][0] > Math.PI / 2)
+      newTurn++;
+
+    angles.pop();
+    angles.unshift([phi, newTurn]);
+
+    let offsetX = x, offsetY = y;
+    for (let i = 0; i < angles.length; i++) {
+      (container.children[i] as HTMLDivElement).style.transform =
+        `translate(${offsetX - SIZE / 2}px, ${offsetY - SIZE / 2}px) ` +
+        `rotate(${angles[i][1] * Math.PI * 2 + angles[i][0]}rad)`;
+
+      offsetX -= SIZE * Math.cos(angles[i][0]);
+      offsetY -= SIZE * Math.sin(angles[i][0]);
+    }
+
+    dx = dy = 0;
+
+    if (autoHideEnabled)
+      autoHideTimer = setTimeout(() => container.className = "hidden", 1000);
   }
-
-  // Shift all body parts back by 1
-  angles.pop();
-  angles.unshift(phi);
-
-  turns.pop();
-  turns.unshift(newTurn);
-
-  // With these variables we will accumulate the offset between body parts
-  let offsetX = x, offsetY = y;
-
-  // Now we just render each bodypart
-  for (let i = 0; i < angles.length; i++) {
-    const element = container.children[i] as HTMLDivElement;
-
-    element.style.transform = `
-      translate(${offsetX - SIZE / 2}px, ${offsetY - SIZE / 2}px)
-      rotate(${turns[i] * Math.PI * 2 + angles[i]}rad)
-    `;
-
-    offsetX -= SIZE * Math.cos(angles[i]);
-    offsetY -= SIZE * Math.sin(angles[i]);
-  }
-  dx = dy = 0;
-
-  if (autoHide)
-    autoHideTimer = setTimeout(() => container.className = "hidden", 1000);
-}
+});
