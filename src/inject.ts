@@ -1,6 +1,7 @@
 import "./inject.scss";
 
 const SIZE = 20;
+let ready = false;
 
 const turns: number[] = [];
 const angles: number[] = [];
@@ -39,6 +40,7 @@ browser.storage.sync.get({
 
     container.appendChild(bodypart);
   }
+  ready = true;
 
   // Update bodyparts on change
   browser.storage.onChanged.addListener((changes) => {
@@ -94,7 +96,7 @@ document.addEventListener("mousemove", (e) => {
   const r = Math.hypot(dx, dy);
   const phi = Math.atan2(dy, dx);
 
-  if (r >= SIZE / 2)
+  if (r >= SIZE / 2 && ready)
     draw(r, phi);
 });
 
