@@ -14,7 +14,6 @@ body {
   grid-gap: 8px 4px;
   grid-template-columns: max-content 1fr;
   -moz-user-select: none;
-  -webkit-user-select: none;
 
   & > * {
     align-self: center;
@@ -23,9 +22,9 @@ body {
 
     &:focus {
       box-shadow:
-        0 0 0 1px #0a84ff inset,
-        0 0 0 1px #0a84ff,
-        0 0 0 4px rgba(10, 132, 255, 0.3);
+        0 0 0 1px $blue-50 inset,
+        0 0 0 1px $blue-50,
+        0 0 0 4px rgba($blue-50, 0.3);
       outline: none;
     }
 
@@ -57,7 +56,6 @@ select {
   padding: 2px;
   border: 1px solid rgba($grey-90, 0.3);
   -moz-appearance: none;
-  -webkit-appearance: none;
   background: no-repeat right 4px center url(downArrow.svg);
   border-radius: 2px;
 }
@@ -76,6 +74,10 @@ input[type=range] {
     border: 1px solid $blue-60;
     background: $blue-50;
     border-radius: 100%;
+  }
+
+  &:focus {
+    box-shadow: none;
   }
 
   &:hover::-moz-range-thumb {
