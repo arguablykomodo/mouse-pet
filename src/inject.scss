@@ -6,6 +6,11 @@
   width: 100vw;
   height: 100vh;
   pointer-events: none;
+  transition: opacity 0.5s;
+
+  &.hidden {
+    opacity: 0;
+  }
 
   div {
     position: fixed;
@@ -16,10 +21,6 @@
     background-image: var(--mouse-pet-image);
     background-position-x: -20px;
     transition: transform 0.1s ease-out;
-
-    &.hidden {
-      display: none;
-    }
 
     &:first-child {
       background-position-x: -40px;

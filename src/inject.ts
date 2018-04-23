@@ -26,12 +26,16 @@ browser.storage.sync.get({
     container.appendChild(document.createElement("div"));
   }
 
+  container.className = settings.petEnabled ? "" : "hidden";
+
   fragment.appendChild(container);
   document.body.appendChild(fragment);
 
   browser.storage.onChanged.addListener((changes) => {
-    if (changes.petEnabled)
+    if (changes.petEnabled) {
+      container.className = changes.petEnabled.newValue ? "" : "hidden";
       isEnabled = changes.petEnabled.newValue;
+    }
 
     if (changes.petAutoHide)
       autoHideEnabled = changes.petAutoHide.newValue;
