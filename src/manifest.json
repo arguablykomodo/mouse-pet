@@ -7,7 +7,7 @@
   },
 
   "manifest_version": 2,
-  "version": "1.0.4",
+  "version": "1.0.5",
 
   "name": "Mouse Pet",
   "description": "A fun extension that adds a creature following your cursor",
