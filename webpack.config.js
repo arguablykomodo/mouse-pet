@@ -38,11 +38,13 @@ module.exports = {
     extensions: [".js", ".ts"]
   },
   plugins: [
-    new CopyWebpackPlugin([{
-      from: "**/*",
-      context: "src",
-      ignore: ["*.ts", "*.scss"]
-    }]),
+    new CopyWebpackPlugin([
+      {
+        from: "**/*",
+        context: "src",
+        ignore: ["*.ts", "*.scss"]
+      }
+    ]),
     new ExtractTextPlugin("[name].css")
   ]
-}
+};

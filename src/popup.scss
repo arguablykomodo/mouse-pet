@@ -21,9 +21,7 @@ body {
     transition: box-shadow 0.1s;
 
     &:focus {
-      box-shadow:
-        0 0 0 1px $blue-50 inset,
-        0 0 0 1px $blue-50,
+      box-shadow: 0 0 0 1px $blue-50 inset, 0 0 0 1px $blue-50,
         0 0 0 4px rgba($blue-50, 0.3);
       outline: none;
     }
@@ -60,7 +58,7 @@ select {
   border-radius: 2px;
 }
 
-input[type=range] {
+input[type="range"] {
   width: 100%;
 
   &::-moz-range-track {

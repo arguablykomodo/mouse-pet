@@ -1,7 +1,9 @@
 import "./popup.scss";
 
 async function main() {
-  const petAutoHide = document.getElementById("petAutoHide") as HTMLInputElement;
+  const petAutoHide = document.getElementById(
+    "petAutoHide"
+  ) as HTMLInputElement;
   const petEnabled = document.getElementById("petEnabled") as HTMLInputElement;
   const petLength = document.getElementById("petLength") as HTMLInputElement;
   const petSkin = document.getElementById("petSkin") as HTMLSelectElement;
@@ -10,7 +12,7 @@ async function main() {
     petAutoHide: false,
     petEnabled: true,
     petLength: 10,
-    petSkin: "snake.png",
+    petSkin: "snake.png"
   });
 
   petAutoHide.checked = settings.petAutoHide;
@@ -23,7 +25,7 @@ async function main() {
       petAutoHide: petAutoHide.checked,
       petEnabled: petEnabled.checked,
       petLength: parseInt(petLength.value, 10),
-      petSkin: petSkin.value,
+      petSkin: petSkin.value
     });
   });
 }

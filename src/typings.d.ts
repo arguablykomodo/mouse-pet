@@ -1,5 +1,5 @@
 interface OptionStorage {
-  petAutoHide: boolean,
+  petAutoHide: boolean;
   petEnabled: boolean;
   petLength: number;
   petSkin: string;
