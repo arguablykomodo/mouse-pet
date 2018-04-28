@@ -1,6 +1,6 @@
 {
   "name": "mouse-pet",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A fun extension that adds a creature following your cursor",
   "repository": {
     "type": "git",
