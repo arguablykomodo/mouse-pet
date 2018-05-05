@@ -5,7 +5,7 @@ browser.storage.sync
     petAutoHide: false,
     petEnabled: true,
     petLength: 10,
-    petSkin: "snake.png"
+    petSkin: "snake.svg"
   })
   .then((settings: OptionStorage) => {
     const SIZE = 20;

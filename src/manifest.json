@@ -37,7 +37,7 @@
     "default_popup": "popup.html"
   },
 
-  "web_accessible_resources": ["skins/*.png"],
+  "web_accessible_resources": ["skins/*.svg"],
 
   "permissions": ["storage"]
 }

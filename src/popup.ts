@@ -12,7 +12,7 @@ async function main() {
     petAutoHide: false,
     petEnabled: true,
     petLength: 10,
-    petSkin: "snake.png"
+    petSkin: "snake.svg"
   });
 
   petAutoHide.checked = settings.petAutoHide;
