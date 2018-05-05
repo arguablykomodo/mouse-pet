@@ -16,14 +16,15 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 20px;
-    height: 20px;
+    width: var(--mouse-pet-size);
+    height: var(--mouse-pet-size);
     background-image: var(--mouse-pet-image);
-    background-position-x: -20px;
+    background-size: cover;
+    background-position-x: calc(-1 * var(--mouse-pet-size));
     transition: transform 0.1s ease-out;
 
     &:first-child {
-      background-position-x: -40px;
+      background-position-x: calc(-2 * var(--mouse-pet-size));
     }
 
     &:last-child {

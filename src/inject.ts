@@ -5,11 +5,12 @@ browser.storage.sync
     petAutoHide: false,
     petEnabled: true,
     petLength: 10,
+    petSize: 20,
     petSkin: "snake.svg"
   })
   .then((settings: OptionStorage) => {
-    const SIZE = 20;
     const angles: Array<[number, number]> = [];
+    let size = settings.petSize;
     let isEnabled = settings.petEnabled;
     let autoHideEnabled = settings.petAutoHide;
     let autoHideTimer: number;
@@ -22,6 +23,7 @@ browser.storage.sync
       "--mouse-pet-image",
       `url(${browser.runtime.getURL(`skins/${settings.petSkin}`)})`
     );
+    container.style.setProperty("--mouse-pet-size", `${settings.petSize}px`);
 
     for (let i = 0; i < settings.petLength; i++) {
       angles.push([0, 0]);
@@ -40,6 +42,11 @@ browser.storage.sync
       }
 
       if (changes.petAutoHide) autoHideEnabled = changes.petAutoHide.newValue;
+
+      if (changes.petSize) {
+        size = changes.petSize.newValue;
+        container.style.setProperty("--mouse-pet-size", `${size}px`);
+      }
 
       if (changes.petSkin)
         container.style.setProperty(
@@ -77,7 +84,7 @@ browser.storage.sync
       const r = Math.hypot(dx, dy);
       const phi = Math.atan2(dy, dx);
 
-      if (r >= SIZE / 2) {
+      if (r >= size / 2) {
         x = e.clientX;
         y = e.clientY;
         draw(r, phi);
@@ -99,11 +106,11 @@ browser.storage.sync
         offsetY = y;
       for (let i = 0; i < angles.length; i++) {
         (container.children[i] as HTMLDivElement).style.transform =
-          `translate(${offsetX - SIZE / 2}px, ${offsetY - SIZE / 2}px) ` +
+          `translate(${offsetX - size / 2}px, ${offsetY - size / 2}px) ` +
           `rotate(${angles[i][1] * Math.PI * 2 + angles[i][0]}rad)`;
 
-        offsetX -= SIZE * Math.cos(angles[i][0]);
-        offsetY -= SIZE * Math.sin(angles[i][0]);
+        offsetX -= size * Math.cos(angles[i][0]);
+        offsetY -= size * Math.sin(angles[i][0]);
       }
 
       dx = dy = 0;
