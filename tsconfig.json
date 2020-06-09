@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "target": "es2017",
-    "strict": true,
-    "outDir": "dist",
-    "typeRoots": ["node_modules/web-ext-types"]
-  },
-  "include": ["src/**/*.ts"]
-}
