@@ -16,7 +16,7 @@
 	width: 20px;
 	height: 20px;
 
-	background-image: url(skins/snake.svg);
+	background-image: url(../skins/snake.svg);
 	transform: translate(var(--x), var(--y)) rotate(var(--a));
 
 	background-position-x: 200%;
