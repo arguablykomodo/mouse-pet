@@ -13,19 +13,20 @@
 	position: fixed;
 	left: 0;
 	top: 0;
-	width: 20px;
-	height: 20px;
+	width: var(--size);
+	height: var(--size);
 
 	background-image: url(../skins/snake.svg);
+	background-size: cover;
 	transform: translate(var(--x), var(--y)) rotate(var(--a));
 
-	background-position-x: 200%;
+	background-position-x: center;
 }
 
 #__mouse-pet-container div:first-child {
-	background-position-x: 300%;
+	background-position-x: left;
 }
 
 #__mouse-pet-container div:last-child {
-	background-position-x: 100%;
+	background-position-x: right;
 }

@@ -27,5 +27,17 @@
 			"js": ["inject/inject.js"],
 			"css": ["inject/inject.css"]
 		}
-	]
+	],
+
+	"browser_action": {
+		"browser_style": true,
+		"default_icon": "icon.svg",
+		"default_popup": "popup/popup.html"
+	},
+
+	"options_ui": {
+		"page": "popup/popup.html"
+	},
+
+	"permissions": ["storage"]
 }

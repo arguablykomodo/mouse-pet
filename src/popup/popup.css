@@ -1,0 +1,22 @@
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: #202023;
+		color: #f9f9fa;
+	}
+}
+
+body {
+	padding: 1rem;
+	display: grid;
+	grid-template-columns: max-content 1fr max-content;
+	grid-gap: 0.5rem;
+	align-items: center;
+}
+
+label {
+	text-align: right;
+}
+
+output span {
+	font-family: monospace;
+}
