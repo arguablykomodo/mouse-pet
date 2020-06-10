@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="20" viewBox="0 0 60 20">
+	<circle fill="#12bc00" cx="10" cy="10" r="10"/>
+	<circle fill="#30e60b" cx="10" cy="10" r="8.5"/>
+
+	<circle fill="#12bc00" cx="30" cy="10" r="10"/>
+	<circle fill="#30e60b" cx="30" cy="10" r="8.5"/>
+
+	<circle fill="#12bc00" cx="50" cy="10" r="10"/>
+	<circle fill="#30e60b" cx="50" cy="10" r="8.5"/>
+
+	<!-- Eyes -->
+	<circle fill="#f9f9fa" cx="55" cy="6.5" r="3"/>
+	<circle fill="#0f1126" cx="56.2" cy="6.5" r="1.8"/>
+	<circle fill="#f9f9fa" cx="55" cy="13.5" r="3"/>
+	<circle fill="#0f1126" cx="56.2" cy="13.5" r="1.8"/>
+</svg>

@@ -1,20 +1,40 @@
 const container = document.createElement("div");
 container.id = "__mouse-pet-container";
 
+const length = 10;
 const r = 10;
-let x = 0;
-let y = 0;
-const head = document.createElement("div");
-container.appendChild(head);
+
+const segments = [];
+for (let i = 0; i < length; i++) {
+	const segment = document.createElement("div");
+	container.prepend(segment);
+	segments.push({ x: 0, y: 0, el: segment });
+}
 
 document.body.appendChild(container);
 
-document.addEventListener("mousemove", (e) => {
+function move(xi, yi, xf, yf, r1, r2) {
 	// Angle between center and target
-	let a = Math.atan2(e.clientY - (y + r), e.clientX - (x + r));
+	let a = Math.atan2(yf - yi, xf - xi);
 	// Target, minus radius (in direction of angle), adjusted for top left corner
-	x = e.clientX - r * Math.cos(a) - r;
-	y = e.clientY - r * Math.sin(a) - r;
+	x = xf - (r1 + r2) * Math.cos(a);
+	y = yf - (r1 + r2) * Math.sin(a);
+	return { x, y, a };
+}
 
-	head.style.transform = `translate(${x}px, ${y}px) rotate(${a}rad)`;
+document.addEventListener("mousemove", (e) => {
+	let lastx = e.clientX - r;
+	let lasty = e.clientY - r;
+	let r2 = 0;
+	for (segment of segments) {
+		let { x, y, a } = move(segment.x, segment.y, lastx, lasty, r, r2);
+		segment.x = x;
+		segment.y = y;
+		segment.el.style.setProperty("--x", `${x}px`);
+		segment.el.style.setProperty("--y", `${y}px`);
+		segment.el.style.setProperty("--a", `${a}rad`);
+		lastx = x;
+		lasty = y;
+		r2 = r;
+	}
 });
