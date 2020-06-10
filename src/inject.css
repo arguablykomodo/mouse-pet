@@ -1,0 +1,17 @@
+#__mouse-pet-container {
+	position: fixed;
+	/* 2^31-2, the second biggest z-index possible, because Easy RSS goes first ;) */
+	z-index: 2147483646;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	pointer-events: none;
+}
+
+#__mouse-pet-container div {
+	width: 20px;
+	height: 20px;
+	background: linear-gradient(to right, black, red);
+	border-radius: 100%;
+}
