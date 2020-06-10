@@ -12,6 +12,15 @@
 		<label for="d">Segment Size:</label>
 		<input type="range" name="d" id="d" min="5" max="50" value="20" />
 		<output for="d"><span>20</span> pixels</output>
+		<label for="skins">Skin:</label>
+		<div id="skins">
+			<input type="radio" name="skin" id="snake" value="snake.svg" checked />
+			<label for="snake"><img src="../skins/snake.svg" /></label>
+			<input type="radio" name="skin" id="abstract" value="abstract.svg" />
+			<label for="abstract"><img src="../skins/abstract.svg" /></label>
+			<input type="radio" name="skin" id="rainbow" value="rainbow.svg" />
+			<label for="rainbow"><img src="../skins/rainbow.svg" /></label>
+		</div>
 		<script src="popup.js"></script>
 	</body>
 </html>

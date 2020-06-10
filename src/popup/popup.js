@@ -14,11 +14,26 @@ d.addEventListener("input", () => {
 	browser.storage.sync.set({ petSize: parseInt(d.value) });
 });
 
+const skins = document.querySelectorAll('input[type=radio][name="skin"]');
+for (skin of skins) {
+	skin.addEventListener("change", (e) => {
+		if (e.target.checked) {
+			browser.storage.sync.set({ petSkin: e.target.value });
+		}
+	});
+}
+
 browser.storage.sync
-	.get({ petLength: 10, petSize: 20 })
-	.then(({ petLength, petSize }) => {
+	.get({ petLength: 10, petSize: 20, petSkin: "snake.svg" })
+	.then(({ petLength, petSize, petSkin }) => {
 		n.value = petLength;
 		nOut.textContent = pad(petLength.toString());
 		d.value = petSize;
 		dOut.textContent = pad(petSize.toString());
+		document.querySelector(
+			'input[type=radio][name="skin"]:checked'
+		).checked = false;
+		document.querySelector(
+			`input[type=radio][name="skin"][value="${petSkin}"]`
+		).checked = true;
 	});

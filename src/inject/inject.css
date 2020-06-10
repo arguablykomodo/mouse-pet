@@ -16,7 +16,7 @@
 	width: var(--size);
 	height: var(--size);
 
-	background-image: url(../skins/snake.svg);
+	background-image: var(--image);
 	background-size: cover;
 	transform: translate(var(--x), var(--y)) rotate(var(--a));
 

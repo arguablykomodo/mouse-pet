@@ -17,6 +17,23 @@ label {
 	text-align: right;
 }
 
+input {
+	margin: 0;
+	padding: 0;
+}
+
 output span {
 	font-family: monospace;
+}
+
+#skins {
+	grid-column: span 2;
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	grid-gap: 0.5rem;
+	align-items: center;
+}
+
+#skins label {
+	text-align: left;
 }

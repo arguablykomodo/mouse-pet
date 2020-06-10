@@ -33,10 +33,14 @@ function move(xf, yf) {
 }
 
 browser.storage.sync
-	.get({ petLength: 10, petSize: 20 })
-	.then(({ petLength, petSize }) => {
+	.get({ petLength: 10, petSize: 20, petSkin: "snake.svg" })
+	.then(({ petLength, petSize, petSkin }) => {
 		r = petSize / 2;
 		container.style.setProperty("--size", `${petSize}px`);
+		container.style.setProperty(
+			"--image",
+			`url(${browser.runtime.getURL(`skins/${petSkin}`)})`
+		);
 
 		for (let i = 0; i < petLength; i++) {
 			const segment = document.createElement("div");
@@ -74,5 +78,11 @@ browser.storage.onChanged.addListener((changes) => {
 			}
 		}
 		move(mouseX, mouseY);
+	}
+	if ("petSkin" in changes && "newValue" in changes.petSkin) {
+		container.style.setProperty(
+			"--image",
+			`url(${browser.runtime.getURL(`skins/${changes.petSkin.newValue}`)})`
+		);
 	}
 });

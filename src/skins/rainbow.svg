@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="20" viewBox="0 0 60 20">
+	<!-- Red-Orange-Yellow -->
+	<rect x="0" y="1" width="40" height="3" fill="#ff0302"/>
+	<path d="M 40 1 L 60 10 H 40 z" fill="#ff0302"/>
+
+	<rect x="0" y="4" width="40" height="3" fill="#fe980e"/>
+	<path d="M 40 4 L 54 10 H 40 z" fill="#fe980e"/>
+
+	<rect x="0" y="7" width="40" height="3" fill="#fefe1e"/>
+	<path d="M 40 7 L 48 10 H 40 z" fill="#fefe1e"/>
+
+	<!-- Purple-Blue-Green -->
+	<rect x="0" y="16" width="40" height="3" fill="#6736fd"/>
+	<path d="M 40 19 L 60 10 H 40 z" fill="#6736fd"/>
+
+	<rect x="0" y="13" width="40" height="3" fill="#0d99fd"/>
+	<path d="M 40 16 L 54 10 H 40 z" fill="#0d99fd"/>
+
+	<rect x="0" y="10" width="40" height="3" fill="#2cfe1e"/>
+	<path d="M 40 13 L 48 10 H 40 z" fill="#2cfe1e"/>
+</svg>
