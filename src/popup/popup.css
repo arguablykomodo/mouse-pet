@@ -22,8 +22,8 @@ input {
 	padding: 0;
 }
 
-output span {
-	font-family: monospace;
+output {
+	min-width: 10ch;
 }
 
 input[type="checkbox"] {
