@@ -1,4 +1,5 @@
 let r = 10;
+let enabled = true;
 const segments = [];
 const container = document.createElement("div");
 container.id = "__mouse-pet-container";
@@ -33,14 +34,15 @@ function move(xf, yf) {
 }
 
 browser.storage.sync
-	.get({ petLength: 10, petSize: 20, petSkin: "snake.svg" })
-	.then(({ petLength, petSize, petSkin }) => {
+	.get({ petEnabled: true, petLength: 10, petSize: 20, petSkin: "snake.svg" })
+	.then(({ petEnabled, petLength, petSize, petSkin }) => {
 		r = petSize / 2;
 		container.style.setProperty("--size", `${petSize}px`);
 		container.style.setProperty(
 			"--image",
 			`url(${browser.runtime.getURL(`skins/${petSkin}`)})`
 		);
+		if (!petEnabled) container.className = "disabled";
 
 		for (let i = 0; i < petLength; i++) {
 			const segment = document.createElement("div");
@@ -51,6 +53,7 @@ browser.storage.sync
 		document.body.appendChild(container);
 
 		document.addEventListener("mousemove", (e) => {
+			if (!enabled) return;
 			mouseX = e.clientX;
 			mouseY = e.clientY;
 			move(e.clientX - r, e.clientY - r);
@@ -58,6 +61,11 @@ browser.storage.sync
 	});
 
 browser.storage.onChanged.addListener((changes) => {
+	if ("petEnabled" in changes && "newValue" in changes.petEnabled) {
+		enabled = changes.petEnabled.newValue;
+		if (enabled) container.className = "";
+		else container.className = "disabled";
+	}
 	if ("petSize" in changes && "newValue" in changes.petSize) {
 		r = changes.petSize.newValue / 2;
 		container.style.setProperty("--size", `${changes.petSize.newValue}px`);

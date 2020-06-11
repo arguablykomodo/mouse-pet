@@ -1,3 +1,8 @@
+const enabled = document.getElementById("enabled");
+enabled.addEventListener("change", () => {
+	browser.storage.sync.set({ petEnabled: enabled.checked });
+});
+
 const pad = (s) => s.padStart(2, "0");
 
 const n = document.getElementById("n");
@@ -24,8 +29,9 @@ for (skin of skins) {
 }
 
 browser.storage.sync
-	.get({ petLength: 10, petSize: 20, petSkin: "snake.svg" })
-	.then(({ petLength, petSize, petSkin }) => {
+	.get({ petEnabled: true, petLength: 10, petSize: 20, petSkin: "snake.svg" })
+	.then(({ petEnabled, petLength, petSize, petSkin }) => {
+		enabled.checked = petEnabled;
 		n.value = petLength;
 		nOut.textContent = pad(petLength.toString());
 		d.value = petSize;

@@ -26,6 +26,11 @@ output span {
 	font-family: monospace;
 }
 
+input[type="checkbox"] {
+	grid-column: span 2;
+	justify-self: flex-start;
+}
+
 #skins {
 	grid-column: span 2;
 	display: grid;

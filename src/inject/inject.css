@@ -9,6 +9,10 @@
 	pointer-events: none;
 }
 
+#__mouse-pet-container.disabled {
+	display: none;
+}
+
 #__mouse-pet-container div {
 	position: fixed;
 	left: 0;
