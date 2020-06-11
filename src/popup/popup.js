@@ -3,7 +3,19 @@ enabled.addEventListener("change", () => {
 	browser.storage.sync.set({ petEnabled: enabled.checked });
 });
 
+const autohide = document.getElementById("autohide");
+autohide.addEventListener("change", () => {
+	browser.storage.sync.set({ petAutoHide: autohide.checked });
+});
+
 const pad = (s) => s.padStart(2, "0");
+
+const t = document.getElementById("t");
+const tOut = document.querySelector("output[for=t] span");
+t.addEventListener("input", () => {
+	tOut.textContent = pad(t.value);
+	browser.storage.sync.set({ petAutoHideTimeout: parseInt(t.value) });
+});
 
 const n = document.getElementById("n");
 const nOut = document.querySelector("output[for=n] span");
@@ -29,17 +41,36 @@ for (skin of skins) {
 }
 
 browser.storage.sync
-	.get({ petEnabled: true, petLength: 10, petSize: 20, petSkin: "snake.svg" })
-	.then(({ petEnabled, petLength, petSize, petSkin }) => {
-		enabled.checked = petEnabled;
-		n.value = petLength;
-		nOut.textContent = pad(petLength.toString());
-		d.value = petSize;
-		dOut.textContent = pad(petSize.toString());
-		document.querySelector(
-			'input[type=radio][name="skin"]:checked'
-		).checked = false;
-		document.querySelector(
-			`input[type=radio][name="skin"][value="${petSkin}"]`
-		).checked = true;
-	});
+	.get({
+		petEnabled: true,
+		petAutoHide: false,
+		petAutoHideTimeout: 2,
+		petLength: 10,
+		petSize: 20,
+		petSkin: "snake.svg",
+	})
+	.then(
+		({
+			petEnabled,
+			petAutoHide,
+			petAutoHideTimeout,
+			petLength,
+			petSize,
+			petSkin,
+		}) => {
+			enabled.checked = petEnabled;
+			autohide.checked = petAutoHide;
+			t.value = petAutoHideTimeout;
+			tOut.textContent = pad(petAutoHideTimeout.toString());
+			n.value = petLength;
+			nOut.textContent = pad(petLength.toString());
+			d.value = petSize;
+			dOut.textContent = pad(petSize.toString());
+			document.querySelector(
+				'input[type=radio][name="skin"]:checked'
+			).checked = false;
+			document.querySelector(
+				`input[type=radio][name="skin"][value="${petSkin}"]`
+			).checked = true;
+		}
+	);

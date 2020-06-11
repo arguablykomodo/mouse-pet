@@ -1,5 +1,8 @@
 let r = 10;
 let enabled = true;
+let autohide = false;
+let timeout = 2000;
+let timeoutId;
 const segments = [];
 const container = document.createElement("div");
 container.id = "__mouse-pet-container";
@@ -34,36 +37,73 @@ function move(xf, yf) {
 }
 
 browser.storage.sync
-	.get({ petEnabled: true, petLength: 10, petSize: 20, petSkin: "snake.svg" })
-	.then(({ petEnabled, petLength, petSize, petSkin }) => {
-		r = petSize / 2;
-		container.style.setProperty("--size", `${petSize}px`);
-		container.style.setProperty(
-			"--image",
-			`url(${browser.runtime.getURL(`skins/${petSkin}`)})`
-		);
-		if (!petEnabled) container.className = "disabled";
+	.get({
+		petEnabled: true,
+		petAutoHide: false,
+		petAutoHideTimeout: 2,
+		petLength: 10,
+		petSize: 20,
+		petSkin: "snake.svg",
+	})
+	.then(
+		({
+			petEnabled,
+			petAutoHide,
+			petAutoHideTimeout,
+			petLength,
+			petSize,
+			petSkin,
+		}) => {
+			r = petSize / 2;
+			container.style.setProperty("--size", `${petSize}px`);
+			container.style.setProperty(
+				"--image",
+				`url(${browser.runtime.getURL(`skins/${petSkin}`)})`
+			);
+			if (!petEnabled) container.classList.add("disabled");
+			autohide = petAutoHide;
+			timeout = petAutoHideTimeout * 1000;
 
-		for (let i = 0; i < petLength; i++) {
-			const segment = document.createElement("div");
-			container.prepend(segment);
-			segments.push({ x: 0, y: 0, el: segment });
+			for (let i = 0; i < petLength; i++) {
+				const segment = document.createElement("div");
+				container.prepend(segment);
+				segments.push({ x: 0, y: 0, el: segment });
+			}
+
+			document.body.appendChild(container);
+
+			document.addEventListener("mousemove", (e) => {
+				if (!enabled) return;
+				mouseX = e.clientX;
+				mouseY = e.clientY;
+				move(e.clientX - r, e.clientY - r);
+				if (autohide) {
+					if (timeoutId) {
+						clearTimeout(timeoutId);
+						container.classList.remove("hidden");
+					}
+					timeoutId = setTimeout(
+						() => container.classList.add("hidden"),
+						timeout
+					);
+				}
+			});
 		}
-
-		document.body.appendChild(container);
-
-		document.addEventListener("mousemove", (e) => {
-			if (!enabled) return;
-			mouseX = e.clientX;
-			mouseY = e.clientY;
-			move(e.clientX - r, e.clientY - r);
-		});
-	});
+	);
 
 browser.storage.onChanged.addListener((changes) => {
+	if ("petAutoHide" in changes && "newValue" in changes.petAutoHide) {
+		autohide = changes.petAutoHide.newValue;
+	}
+	if (
+		"petAutoHideTimeout" in changes &&
+		"newValue" in changes.petAutoHideTimeout
+	) {
+		timeout = changes.petAutoHideTimeout.newValue * 1000;
+	}
 	if ("petEnabled" in changes && "newValue" in changes.petEnabled) {
 		enabled = changes.petEnabled.newValue;
-		if (enabled) container.className = "";
+		if (enabled) container.classList.remove("disabled");
 		else container.className = "disabled";
 	}
 	if ("petSize" in changes && "newValue" in changes.petSize) {
