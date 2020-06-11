@@ -8,34 +8,34 @@ autohide.addEventListener("change", () => {
 	browser.storage.sync.set({ petAutoHide: autohide.checked });
 });
 
-const pad = (s) => s.padStart(2, "0");
-
-const o = document.getElementById("o");
-const oOut = document.querySelector("output[for=o] span");
-o.addEventListener("input", () => {
-	oOut.textContent = o.value * 100;
+const opacity = document.getElementById("opacity");
+const opacityOut = document.querySelector("output[for=opacity]");
+opacity.addEventListener("input", () => {
+	opacityOut.textContent = `${opacity.value * 100}%`;
 	browser.storage.sync.set({ petOpacity: parseFloat(o.value) });
 });
 
-const t = document.getElementById("t");
-const tOut = document.querySelector("output[for=t] span");
-t.addEventListener("input", () => {
-	tOut.textContent = pad(t.value);
-	browser.storage.sync.set({ petAutoHideTimeout: parseInt(t.value) });
+const p = (s) => (s > 1 ? "s" : "");
+
+const timeout = document.getElementById("timeout");
+const timeoutOut = document.querySelector("output[for=timeout]");
+timeout.addEventListener("input", () => {
+	timeoutOut.textContent = `${timeout.value} second${p(timeout.value)}`;
+	browser.storage.sync.set({ petAutoHideTimeout: parseInt(timeout.value) });
 });
 
-const n = document.getElementById("n");
-const nOut = document.querySelector("output[for=n] span");
-n.addEventListener("input", () => {
-	nOut.textContent = pad(n.value);
-	browser.storage.sync.set({ petLength: parseInt(n.value) });
+const length = document.getElementById("length");
+const lengthOut = document.querySelector("output[for=length]");
+length.addEventListener("input", () => {
+	lengthOut.textContent = `${length.value} segment${p(length.value)}`;
+	browser.storage.sync.set({ petLength: parseInt(length.value) });
 });
 
-const d = document.getElementById("d");
-const dOut = document.querySelector("output[for=d] span");
-d.addEventListener("input", () => {
-	dOut.textContent = pad(d.value);
-	browser.storage.sync.set({ petSize: parseInt(d.value) });
+const size = document.getElementById("size");
+const sizeOut = document.querySelector("output[for=size]");
+size.addEventListener("input", () => {
+	sizeOut.textContent = `${size.value} pixel${p(size.value)}`;
+	browser.storage.sync.set({ petSize: parseInt(size.value) });
 });
 
 const skins = document.querySelectorAll('input[type=radio][name="skin"]');
@@ -69,14 +69,14 @@ browser.storage.sync
 		}) => {
 			enabled.checked = petEnabled;
 			autohide.checked = petAutoHide;
-			t.value = petAutoHideTimeout;
-			tOut.textContent = pad(petAutoHideTimeout.toString());
-			o.value = petOpacity;
-			oOut.textContent = petOpacity * 100;
-			n.value = petLength;
-			nOut.textContent = pad(petLength.toString());
-			d.value = petSize;
-			dOut.textContent = pad(petSize.toString());
+			timeout.value = petAutoHideTimeout;
+			timeoutOut.textContent = `${timeout.value} second${p(timeout.value)}`;
+			opacity.value = petOpacity;
+			opacityOut.textContent = `${opacity.value * 100}%`;
+			length.value = petLength;
+			lengthOut.textContent = `${length.value} segment${p(length.value)}`;
+			size.value = petSize;
+			sizeOut.textContent = `${size.value} pixel${p(size.value)}`;
 			document.querySelector(
 				'input[type=radio][name="skin"]:checked'
 			).checked = false;
