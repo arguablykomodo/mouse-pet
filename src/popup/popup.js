@@ -12,7 +12,7 @@ const opacity = document.getElementById("opacity");
 const opacityOut = document.querySelector("output[for=opacity]");
 opacity.addEventListener("input", () => {
 	opacityOut.textContent = `${opacity.value * 100}%`;
-	browser.storage.sync.set({ petOpacity: parseFloat(o.value) });
+	browser.storage.sync.set({ petOpacity: parseFloat(opacity.value) });
 });
 
 const p = (s) => (s > 1 ? "s" : "");
