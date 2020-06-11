@@ -24,8 +24,7 @@
 	"content_scripts": [
 		{
 			"matches": ["<all_urls>"],
-			"js": ["inject/inject.js"],
-			"css": ["inject/inject.css"]
+			"js": ["inject/inject.js"]
 		}
 	],
 

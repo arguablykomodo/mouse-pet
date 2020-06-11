@@ -7,6 +7,16 @@ const segments = [];
 const container = document.createElement("div");
 container.id = "__mouse-pet-container";
 
+const css = document.createElement("link");
+css.rel = "stylesheet";
+css.href = browser.runtime.getURL("inject/inject.css");
+
+const shadowContainer = document.createElement("div");
+shadowContainer.style.all = "initial";
+const shadow = shadowContainer.attachShadow({ mode: "open" });
+shadow.append(css);
+shadow.append(container);
+
 let mouseX = 0;
 let mouseY = 0;
 
@@ -73,7 +83,7 @@ browser.storage.sync
 				segments.push({ x: 0, y: 0, el: segment });
 			}
 
-			document.body.appendChild(container);
+			document.body.appendChild(shadowContainer);
 
 			document.addEventListener("mousemove", (e) => {
 				if (!enabled) return;
