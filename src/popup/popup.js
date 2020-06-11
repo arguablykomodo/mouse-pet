@@ -10,6 +10,13 @@ autohide.addEventListener("change", () => {
 
 const pad = (s) => s.padStart(2, "0");
 
+const o = document.getElementById("o");
+const oOut = document.querySelector("output[for=o] span");
+o.addEventListener("input", () => {
+	oOut.textContent = o.value * 100;
+	browser.storage.sync.set({ petOpacity: parseFloat(o.value) });
+});
+
 const t = document.getElementById("t");
 const tOut = document.querySelector("output[for=t] span");
 t.addEventListener("input", () => {
@@ -45,6 +52,7 @@ browser.storage.sync
 		petEnabled: true,
 		petAutoHide: false,
 		petAutoHideTimeout: 2,
+		petOpacity: 1,
 		petLength: 10,
 		petSize: 20,
 		petSkin: "snake.svg",
@@ -54,6 +62,7 @@ browser.storage.sync
 			petEnabled,
 			petAutoHide,
 			petAutoHideTimeout,
+			petOpacity,
 			petLength,
 			petSize,
 			petSkin,
@@ -62,6 +71,8 @@ browser.storage.sync
 			autohide.checked = petAutoHide;
 			t.value = petAutoHideTimeout;
 			tOut.textContent = pad(petAutoHideTimeout.toString());
+			o.value = petOpacity;
+			oOut.textContent = petOpacity * 100;
 			n.value = petLength;
 			nOut.textContent = pad(petLength.toString());
 			d.value = petSize;

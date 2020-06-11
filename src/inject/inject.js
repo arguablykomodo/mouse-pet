@@ -41,6 +41,7 @@ browser.storage.sync
 		petEnabled: true,
 		petAutoHide: false,
 		petAutoHideTimeout: 2,
+		petOpacity: 1,
 		petLength: 10,
 		petSize: 20,
 		petSkin: "snake.svg",
@@ -50,6 +51,7 @@ browser.storage.sync
 			petEnabled,
 			petAutoHide,
 			petAutoHideTimeout,
+			petOpacity,
 			petLength,
 			petSize,
 			petSkin,
@@ -60,6 +62,7 @@ browser.storage.sync
 				"--image",
 				`url(${browser.runtime.getURL(`skins/${petSkin}`)})`
 			);
+			container.style.setProperty("--opacity", petOpacity);
 			if (!petEnabled) container.classList.add("disabled");
 			autohide = petAutoHide;
 			timeout = petAutoHideTimeout * 1000;
@@ -92,26 +95,27 @@ browser.storage.sync
 	);
 
 browser.storage.onChanged.addListener((changes) => {
-	if ("petAutoHide" in changes && "newValue" in changes.petAutoHide) {
+	if ("petAutoHide" in changes) {
 		autohide = changes.petAutoHide.newValue;
+		if (!autohide) container.classList.remove("hidden");
+		else
+			timeoutId = setTimeout(() => container.classList.add("hidden"), timeout);
 	}
-	if (
-		"petAutoHideTimeout" in changes &&
-		"newValue" in changes.petAutoHideTimeout
-	) {
+	if ("petAutoHideTimeout" in changes)
 		timeout = changes.petAutoHideTimeout.newValue * 1000;
-	}
-	if ("petEnabled" in changes && "newValue" in changes.petEnabled) {
+	if ("petOpacity" in changes)
+		container.style.setProperty("--opacity", changes.petOpacity.newValue);
+	if ("petEnabled" in changes) {
 		enabled = changes.petEnabled.newValue;
 		if (enabled) container.classList.remove("disabled");
 		else container.className = "disabled";
 	}
-	if ("petSize" in changes && "newValue" in changes.petSize) {
+	if ("petSize" in changes) {
 		r = changes.petSize.newValue / 2;
 		container.style.setProperty("--size", `${changes.petSize.newValue}px`);
 		move(mouseX, mouseY);
 	}
-	if ("petLength" in changes && "newValue" in changes.petLength) {
+	if ("petLength" in changes) {
 		const diff = changes.petLength.newValue - segments.length;
 		if (diff > 0) {
 			for (let i = 0; i < diff; i++) {
@@ -127,7 +131,7 @@ browser.storage.onChanged.addListener((changes) => {
 		}
 		move(mouseX, mouseY);
 	}
-	if ("petSkin" in changes && "newValue" in changes.petSkin) {
+	if ("petSkin" in changes) {
 		container.style.setProperty(
 			"--image",
 			`url(${browser.runtime.getURL(`skins/${changes.petSkin.newValue}`)})`
