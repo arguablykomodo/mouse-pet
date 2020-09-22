@@ -18,7 +18,7 @@ If you don't like it, you can go for a more abstract style.
 
 ![Rainbow](./screenshots/rainbow.png)
 
-And there's also a rainbow! Because why not? (Note that in this screenshot i changed the size and opacity to make it less intrusive)
+And there's also a rainbow! Because why not?
 
 ![Cursor](./screenshots/cursor.png)
 
